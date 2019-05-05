@@ -1,8 +1,0 @@
-{
-    "port":3000,
-    "watch":true,
-    "read-only":false,
-    "no-gzip":false,
-    "host":"192.168.3.199",
-    "routes":"route.json"
-}
