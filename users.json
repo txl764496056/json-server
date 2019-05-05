@@ -1,0 +1,16 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "username": "root",
+            "password": "admin",
+            "token": "DJFKD2222KK"
+        },
+        {
+            "id": 2,
+            "username": "joy",
+            "password": "admin",
+            "token": "IIdjfkd99"
+        }
+    ]
+}
