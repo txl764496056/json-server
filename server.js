@@ -29,40 +29,28 @@ server.use(jsonServer.bodyParser)
 server.post('/login', (req, res) => {
   let data = process.login(req.body);
   res.statusCode = data.code; //返回状态码
-  if(data.code==200){
-    res.jsonp({
-        result:{
-          ...data
-        }
-    })
-  }else{
-    res.jsonp({
-        ...data
-    })
-  }
+  res.jsonp({
+      ...data
+  })
+  
 });
 // 登录 get
 server.get('/login', (req, res) => {
   let token = req.headers.authorization.split(" ")[1];
   let data = process.getAdmin(token);
   res.statusCode = data.code; //返回状态码
-  if(data.code==200){
-    res.jsonp({
-        result:{
-          ...data
-        }
-    })
-  }else{
-    res.jsonp({
-        ...data
-    })
-  }
+  res.jsonp({
+      ...data
+  })
+  
 });
 
 // 分页数据
 server.get('/business/search',(req,res) => {
+  let data = process.list(req.query);
+  res.statusCode = data.code; //返回状态码
   res.jsonp({
-    ...req.body
+    ...data
   })
 });
 

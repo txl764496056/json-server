@@ -1,8 +1,56 @@
 
 'use strict'
-const db = require('./users.json')
+const users_json = require('./data/users.json')
+const mock_data = require("./data/mock-data.js")
 
-let users = db.users;
+let users = users_json.users;
+
+/**
+ * 分页数据
+ */
+const list = function(options){
+    let code = 400,msg = "",total = 0;
+    let {keyword,status,page,size} = options;
+    let list = mock_data.list;
+    
+    // 某一页
+    if(page>0&&size>0){
+
+        // 关键字筛选
+        if(keyword!=""){
+            list = list.filter((item)=>{
+                let str = item.username+""+item.business_name+""+item.legal_person;
+                return str.indexOf(keyword)!=-1;
+            });
+        }
+        
+        // 状态筛选
+        if(status>0){
+            list = list.filter((item)=>{
+                return item.status === Number.parseInt(status);
+            });
+        }
+        
+        total = list.length; //经过筛选后，满足条件的总数
+
+        // 返回一页数据
+        let start = (page-1)*size;
+        let end = page*size;
+        list = list.splice(start,end);
+
+    }else{
+        list = [];
+    }
+
+    return {
+        code,
+        msg,
+        result:{
+            total,
+            list
+        }
+    }
+}
 
 /**
  * 登录验证
@@ -32,7 +80,9 @@ const login = function(login_user){
     
     return {
         msg,
-        admin,
+        result:{
+            admin
+        },
         code
     }
 }
@@ -57,13 +107,16 @@ const getAdmin = function(token){
         msg = "OK";
     }
     return {
-        admin,
+        result:{
+            admin
+        },
         code,
         msg
     }
 }
 
 module.exports ={
-    login,
-    getAdmin
+    login, //登录验证
+    getAdmin, // 获取用户信息
+    list //分页列表，返回指定某页数据
 }
