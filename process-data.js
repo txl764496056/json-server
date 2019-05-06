@@ -2,6 +2,7 @@
 'use strict'
 const users_json = require('./data/users.json')
 const mock_data = require("./data/mock-data.js")
+const list_json = require('./data/list.json')
 
 let users = users_json.users;
 
@@ -11,7 +12,8 @@ let users = users_json.users;
 const list = function(options){
     let code = 400,msg = "",total = 0;
     let {keyword,status,page,size} = options;
-    let list = mock_data.list;
+    // let list = mock_data.list;//mock生成随机列表
+    let list = list_json.list; //固定的列表数据
     
     // 某一页
     if(page>0&&size>0){
@@ -36,7 +38,9 @@ const list = function(options){
         // 返回一页数据
         let start = (page-1)*size;
         let end = page*size;
-        list = list.splice(start,end);
+        list = list.slice(start,end);
+
+        code = 200;
 
     }else{
         list = [];

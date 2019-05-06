@@ -3,7 +3,7 @@ const Mock = require('mockjs')
 const Random =  Mock.Random;
 
 const list = Mock.mock({
-    "list|60":[{
+    "list|15-85":[{
         "id":"@increment",
         "number|1-100":1,
         "username":"@cname()",
